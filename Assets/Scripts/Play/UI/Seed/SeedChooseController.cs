@@ -40,7 +40,7 @@ public class SeedChooseController : MonoBehaviour {
         }
         playerController = playerObj.GetComponent<PlayerController>();
     }
-    
+
 
     /*———————————————— 更新 ————————————————*/
     // フレーム毎の更新
@@ -57,7 +57,7 @@ public class SeedChooseController : MonoBehaviour {
     void FixedUpdate()
     {
         // frameを動かす
-        Move(); 
+        Move();
     }
 
 
