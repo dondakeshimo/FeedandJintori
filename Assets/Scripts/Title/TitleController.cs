@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class TitleController : MonoBehaviour {
 
-    // プレハブ
     public GameObject optionPrefab;
     public GameObject framePrefab;
 
@@ -15,27 +14,25 @@ public class TitleController : MonoBehaviour {
     // optionのサイズ
     public static float FRAME_SIZE = 120;
 
-	/*———————————————— 初期化 ————————————————*/
-	void Start () {
+
+    void Start () {
         myTransform = transform;
         ArrayOptions();
         InstantiateOption(framePrefab, 0, false);
-	}
-	
-	///*———————————————— フレーム更新 ————————————————*/
-	//void Update () {
-		
-	//}
+    }
 
 
-    /*———————————————— optionを並べる ————————————————*/
+    void Update () {
+    }
+
+
     void ArrayOptions() {
         for (int i = 0; i <= optionNum-1; i++) {
             InstantiateOption(optionPrefab, i, true);
         }
     }
 
-    /*———————————————— インスタンス化 ————————————————*/
+
     void InstantiateOption(GameObject prefab, int dx, bool isOption) {
         GameObject instance = Instantiate(prefab, myTransform);
         instance.transform.Translate(new Vector3(dx * FRAME_SIZE, 0, 0));

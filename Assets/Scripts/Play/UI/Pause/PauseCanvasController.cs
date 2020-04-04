@@ -10,14 +10,14 @@ public class PauseCanvasController : MonoBehaviour {
 
     bool finished = false;
 
-	/*———————————————— 初期化 ————————————————*/
-	void Start () {
+    /*———————————————— 初期化 ————————————————*/
+    void Start () {
         myTransform = transform;
         MakePause();
-	}
-	
-	/*———————————————— フレーム更新 ————————————————*/
-	void Update () {
+    }
+    
+    /*———————————————— フレーム更新 ————————————————*/
+    void Update () {
         switch (MainController.state) {
             case 0: // スタート待機
                 GetStartKey();
@@ -36,7 +36,7 @@ public class PauseCanvasController : MonoBehaviour {
             default:
                 break;
         }
-	}
+    }
 
 
 

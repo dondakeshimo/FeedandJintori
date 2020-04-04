@@ -13,7 +13,7 @@ public class SeedHaveController : MonoBehaviour {
     int[] seedCounts;
     int seedCount = 0;
 
-	void Start () {
+    void Start () {
         myTransform = transform;
         myText = myTransform.GetComponent<Text>();
 
@@ -28,13 +28,13 @@ public class SeedHaveController : MonoBehaviour {
                 break;
         }
         ChangeText();
-	}
+    }
 
-	void Update () {
+    void Update () {
         if (seedCount != seedCounts[seedNum]) {
             ChangeText();
         }
-	}
+    }
 
     void ChangeText() {
         myText.text = "x" + seedCounts[seedNum];

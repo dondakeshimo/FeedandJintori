@@ -12,18 +12,18 @@ public class RafflesiaController : MonoBehaviour {
     Ray[] rayAround = new Ray[8];               // 周りに飛ばすray8本
 
 
-	/*——————————————— 咲いた時の処理 —————————————————*/
-	void Start () {
+    /*——————————————— 咲いた時の処理 —————————————————*/
+    void Start () {
         myTransform = transform;
         MakeRayAround();
         SearchNeighbors();
         DestroyNeighbors();
-	}
-	
+    }
 
-	/*——————————————— 咲いてる時の処理 —————————————————*/
-	void Update () {
-	}
+
+    /*——————————————— 咲いてる時の処理 —————————————————*/
+    void Update () {
+    }
 
 
 

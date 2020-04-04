@@ -9,16 +9,16 @@ public class FlowerController : MonoBehaviour {
     public int score;
 
     /*———————————————初期化(育った時の処理)—————————————————*/
-	void Start () {
+    void Start () {
         // 得点の追加
         plusScore(score);
-	}
-	
+    }
+
 
     /*———————————————更新(花が咲いている時の処理)—————————————————*/
-	void Update () {
-       
-	}
+    void Update () {
+
+    }
 
 
     /*————————————————花が摘まれた時の処理————————————————*/

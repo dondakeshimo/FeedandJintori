@@ -11,7 +11,7 @@ public class PauseTextController : MonoBehaviour {
     Text myText;
 
     /*———————————————— 初期化 ————————————————*/
-	void Start () {
+    void Start () {
         myTransform = transform;
         myText = myTransform.GetComponent<Text>();
         switch (MainController.state) {
@@ -36,11 +36,11 @@ public class PauseTextController : MonoBehaviour {
             default:
                 break;
         }
-	}
-	
+    }
+    
 
     /*———————————————— フレーム更新 ————————————————*/
-	void Update () {
+    void Update () {
         switch (MainController.state) {
             case 0:
                 GetStartKey();
@@ -51,7 +51,7 @@ public class PauseTextController : MonoBehaviour {
             default:
                 break;
         }
-	}
+    }
 
 
 

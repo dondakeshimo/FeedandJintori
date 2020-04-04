@@ -30,7 +30,6 @@ public class PlayerController : MonoBehaviour {
     public int score = 0;
 
 
-    /*——————————————— 初期化 —————————————————*/
     void Start () {
         // playerの移動関連
         myTransform = transform;
@@ -40,10 +39,9 @@ public class PlayerController : MonoBehaviour {
         // enemyの番号
         enemyNum = CalcEnemyPlayerNumber(playerNum);
 
-	}
+    }
 
-    /*—————————————— 更新 ——————————————————*/
-    // フレーム毎の更新
+
     void Update()
     {
         if (MainController.state == 2) {
@@ -68,6 +66,7 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+
     // 秒数固定の更新
     void FixedUpdate()
     {
@@ -75,9 +74,6 @@ public class PlayerController : MonoBehaviour {
         Move();
     }
 
-
-
-    /*———————————————— playerの移動 ————————————————*/
 
     // 方向キーを押した時
     void SetTargetPosition() {
@@ -123,11 +119,6 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-
-
-
-    /*———————————————— タネ関連 ————————————————*/
-
     // return/spaceキーを押された時に呼ばれる関数
     void GetSeedKey() {
         Vector3 rayPosition = myTransform.position;         // rayの始点
@@ -135,7 +126,7 @@ public class PlayerController : MonoBehaviour {
         rayToSeed = new Ray(rayPosition, -myTransform.up);  // rayを作成
         RaycastHit seed;    // rayがhitしたオブジェクト
         // rayがタネ系に当たった場合
-        if(Physics.Raycast(rayToSeed, out seed, 5.0f, seedLayer)) { 
+        if(Physics.Raycast(rayToSeed, out seed, 5.0f, seedLayer)) {
             Transform seedTransform = seed.transform;
             // 足元に相手のタネ系オブジェクトがある
             if (seedTransform.name == enemyNum.ToString()) {
@@ -147,11 +138,12 @@ public class PlayerController : MonoBehaviour {
             }
         }
         // 足元に何もオブジェクトがない
-        else if(seedCounts[chosenOption] > 0) {     
+        else if(seedCounts[chosenOption] > 0) {
             SetSeed();  // タネを植える
         }
 
     }
+
 
     // タネを植える
     void SetSeed() {
@@ -162,6 +154,7 @@ public class PlayerController : MonoBehaviour {
         seedCounts[chosenOption] -= 1;               // タネを消費
     }
 
+
     // タネを取る(花を摘む)
     void TakeSeed(Transform seed) {
         seed.GetComponent<FlowerController>().TakeFlower(seedCounts); // 花が摘まれた時の処理
@@ -169,8 +162,6 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-
-    /*———————————————計算処理—————————————————*/
     // 相手のplayer番号を計算
     int CalcEnemyPlayerNumber(int n) {
         switch (n) {

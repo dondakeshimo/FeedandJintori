@@ -11,7 +11,7 @@ public class ScoreController : MonoBehaviour {
     Text scoreText;
     PlayerController player;
 
-	void Start () {
+    void Start () {
         // Textをキャスト
         scoreText = transform.GetComponent<Text>();
         // PlayerControllerをキャスト
@@ -27,15 +27,15 @@ public class ScoreController : MonoBehaviour {
         }
         // 色を変更
         ChangeColor();
-	}
-	
+    }
 
-	void Update () {
+
+    void Update () {
         if (score != player.score) {
             score = player.score;
             scoreText.text = score.ToString();
         }
-	}
+    }
 
 
     // 色を変更

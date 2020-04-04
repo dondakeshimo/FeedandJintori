@@ -19,7 +19,7 @@ public class SeedChooseController : MonoBehaviour {
 
 
     /*——————————————初期化——————————————————*/
-	void Start () {
+    void Start () {
         // 値の取得
         frameSize = MainController.Frame_Size;              // 枠の横サイズを取得
         myTransform = transform;
@@ -39,11 +39,11 @@ public class SeedChooseController : MonoBehaviour {
                 break;
         }
         playerController = playerObj.GetComponent<PlayerController>();
-	}
-	
+    }
+    
 
     /*———————————————— 更新 ————————————————*/
-	// フレーム毎の更新
+    // フレーム毎の更新
     void Update () {
         // frameが動いていない時
         if (myTransform.position == target) {
@@ -51,7 +51,7 @@ public class SeedChooseController : MonoBehaviour {
             // 入力があればtargetをセット
             SetTarget();
         }
-	}
+    }
 
     // 秒数毎の更新
     void FixedUpdate()

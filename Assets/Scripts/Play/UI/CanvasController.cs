@@ -17,7 +17,7 @@ public class CanvasController : MonoBehaviour {
 
 
     /*———————————————— 初期化 ————————————————*/
-	void Start () {
+    void Start () {
         myTransform = transform;
 
         // 選択肢を並べる
@@ -29,8 +29,8 @@ public class CanvasController : MonoBehaviour {
         // 得点を表示する
         MakeScore(1);
         MakeScore(2);
-	}
-	
+    }
+
 
 
 

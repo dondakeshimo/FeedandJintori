@@ -13,14 +13,14 @@ public class SeedOptionPanel : MonoBehaviour {
     Transform myTransform;
     float frameSize;        // 枠の横サイズ
 
-	/*———————————————— 初期化 ————————————————*/
-	void Start () {
+    /*———————————————— 初期化 ————————————————*/
+    void Start () {
         myTransform = transform;
         frameSize = MainController.Frame_Size;
 
         ArrayOption();
         MakeFrame();
-	}
+    }
 
 
     /*———————————————— option作成 ————————————————*/

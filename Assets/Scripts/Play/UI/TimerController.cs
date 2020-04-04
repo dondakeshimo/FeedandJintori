@@ -11,13 +11,13 @@ public class TimerController : MonoBehaviour {
 
 
     // 初期化
-	void Start () {
+    void Start () {
         timerText = transform.GetComponent<Text>();
         timerText.text = timeCount.ToString();
     }
-	
+
     // フレーム更新
-	void Update () {
+    void Update () {
         if (MainController.state == 2) {  // 開始した後
             frameCount += Time.deltaTime;
             // 1秒たったら、timeCountを進める
@@ -32,5 +32,5 @@ public class TimerController : MonoBehaviour {
                 }
             }
         }
-	}
+    }
 }
