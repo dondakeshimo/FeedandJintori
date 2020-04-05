@@ -17,19 +17,19 @@ public class PauseCanvasController : MonoBehaviour {
 
 
     void Update () {
-        switch (MainController.state) {
-            case 0: // スタート待機
+        switch (PlayingStateController.PlayingState) {
+            case PlayingStateEnum.preparing:
                 GetStartKey();
                 break;
-            case 1: // カウント中
+            case PlayingStateEnum.counting:
                 break;
-            case 2: // プレイ中
+            case PlayingStateEnum.playing:
                 GetPauseKey();
                 break;
-            case 3: // ポーズ中
+            case PlayingStateEnum.pausing:
                 GetRestartKey();
                 break;
-            case 4: // finish
+            case PlayingStateEnum.finished:
                 GetFinished();
                 break;
             default:
@@ -47,7 +47,7 @@ public class PauseCanvasController : MonoBehaviour {
     // スタートキーを押した時
     void GetStartKey() {
         if (Input.GetButtonUp("Start")) {
-            MainController.state = 1;
+            PlayingStateController.PlayingState = PlayingStateEnum.counting;
         }
     }
 
@@ -55,7 +55,7 @@ public class PauseCanvasController : MonoBehaviour {
     // ポーズキーを押した時
     void GetPauseKey() {
         if (Input.GetButtonDown("Start")) {
-            MainController.state = 3;
+            PlayingStateController.PlayingState = PlayingStateEnum.pausing;
             MakePause();
         }
     }
@@ -64,7 +64,7 @@ public class PauseCanvasController : MonoBehaviour {
     // リスタート(ポーズ解除）
     void GetRestartKey() {
         if (Input.GetButtonDown("Start")) {
-            MainController.state = 2;
+            PlayingStateController.PlayingState = PlayingStateEnum.playing;
             foreach(Transform child in transform) {
                 Destroy(child.gameObject);
             }

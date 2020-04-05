@@ -17,7 +17,7 @@ public class TimerController : MonoBehaviour {
 
 
     void Update () {
-        if (MainController.state == 2) {
+        if (PlayingStateController.PlayingState == PlayingStateEnum.playing) {
             frameCount += Time.deltaTime;
             // 1秒たったら、timeCountを進める
             if (frameCount >= 1)
@@ -26,7 +26,7 @@ public class TimerController : MonoBehaviour {
                 timerText.text = timeCount.ToString();
                 frameCount = 0;
                 if (timeCount <= 0){
-                    MainController.state = 4;
+                    PlayingStateController.PlayingState = PlayingStateEnum.finished;
                     print("Finish");
                 }
             }

@@ -5,7 +5,7 @@ using UnityEngine;
 public class PauseBGController : MonoBehaviour {
 
     void Update () {
-        if(MainController.state == 2) {
+        if(PlayingStateController.PlayingState == PlayingStateEnum.playing) {
             Destroy(transform.gameObject);
         }
     }

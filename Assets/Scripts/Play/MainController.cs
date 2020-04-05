@@ -4,24 +4,14 @@ using UnityEngine;
 
 public class MainController : MonoBehaviour {
 
-    public Transform sandPrefab;
     public GameObject player1Prefab;
     public GameObject player2Prefab;
     public static GameObject player1;
     public static GameObject player2;
-
-    // 0: startしていない
-    // 1: カウント中
-    // 2: start済み
-    // 3: pause中
-    // 4: finish済み
-    public static int state = 0;
-    public static float Frame_Size = 100f;
-
-    const int MAP_WIDTH = 7;
-    const int MAP_HEIGHT = 7;
-
     public Transform[] tile;
+    public static float Frame_Size = 100f;
+    public const int MAP_WIDTH = 7;
+    public const int MAP_HEIGHT = 7;
 
 
     void Start () {
@@ -54,5 +44,4 @@ public class MainController : MonoBehaviour {
             }
         }
     }
-
 }

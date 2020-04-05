@@ -18,7 +18,7 @@ public class SeedController : MonoBehaviour {
 
 
     void Update () {
-        if (MainController.state == 2) {
+        if (PlayingStateController.PlayingState == PlayingStateEnum.playing) {
             // 秒数更新
             frameCount += Time.deltaTime;
 
@@ -32,42 +32,6 @@ public class SeedController : MonoBehaviour {
                 Destroy(gameObject);
                 frameCount = 0;
             }
-        }
-    }
-
-
-
-
-
-
-
-
-
-    /*———————————————————————————— 未使用 ————————————————————————————*/
-
-
-    /*———————————————ラフレシア関連—————————————————*/
-
-    // 周りのラフレシアを確認
-    bool SearchNeighbors() {
-        if (GameObject.FindWithTag("Rafflesia")) {
-            GameObject[] rafflesias = GameObject.FindGameObjectsWithTag("Rafflesia");
-            foreach (GameObject rafflesia in rafflesias) {
-                float d_x = Mathf.Abs(rafflesia.transform.position.x - transform.position.x);
-                float d_z = Mathf.Abs(rafflesia.transform.position.z - transform.position.z);
-                if ((d_x <= 1) && (d_z <= 1))
-                {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
-    // ラフレシアがあった時に破壊される
-    void DestroyByRafflesia() {
-        if (SearchNeighbors()) {
-            Destroy(gameObject);
         }
     }
 }

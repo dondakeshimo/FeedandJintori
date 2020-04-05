@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour {
 
     void Update()
     {
-        if (MainController.state == 2) {
+        if (PlayingStateController.PlayingState == PlayingStateEnum.playing) {
             // playerが移動済みかどうか
             if (transform.position == target)
             {

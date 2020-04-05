@@ -43,7 +43,7 @@ public class TitleOptionFrame: MonoBehaviour {
 
 
     void OnEnterButton(){
-        MainController.state = 0;
+        PlayingStateController.PlayingState = PlayingStateEnum.preparing;
         SceneManager.LoadScene("_Scenes/Play");
     }
 }

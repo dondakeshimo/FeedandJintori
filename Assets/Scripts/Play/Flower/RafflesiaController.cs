@@ -50,7 +50,7 @@ public class RafflesiaController : MonoBehaviour {
     }
 
 
-    /*———————————————— 周りのタネ系オブジェクトを破壊 ————————————————*/
+    // 周りのタネ系オブジェクトを破壊
     void DestroyNeighbors() {
         foreach (GameObject obj in neighbors) {
             if (obj != null) {

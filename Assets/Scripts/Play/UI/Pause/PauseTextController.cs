@@ -12,14 +12,14 @@ public class PauseTextController : MonoBehaviour {
 
     void Start () {
         myText = transform.GetComponent<Text>();
-        switch (MainController.state) {
-            case 0:
+        switch (PlayingStateController.PlayingState) {
+            case PlayingStateEnum.preparing:
                 myText.text = "PRESS +/-";
                 break;
-            case 3:
+            case PlayingStateEnum.pausing:
                 myText.text = "PAUSE";
                 break;
-            case 4:
+            case PlayingStateEnum.finished:
                 PlayerController _player1 = MainController.player1.GetComponent<PlayerController>();
                 PlayerController _player2 = MainController.player2.GetComponent<PlayerController>();
                 if (_player1.score > _player2.score) {
@@ -29,7 +29,6 @@ public class PauseTextController : MonoBehaviour {
                 } else {
                     myText.text = "Draw";
                 }
-
                 break;
             default:
                 break;
@@ -38,11 +37,11 @@ public class PauseTextController : MonoBehaviour {
 
 
     void Update () {
-        switch (MainController.state) {
-            case 0:
+        switch (PlayingStateController.PlayingState) {
+            case PlayingStateEnum.preparing:
                 GetStartKey();
                 break;
-            case 1:
+            case PlayingStateEnum.counting:
                 CountDown();
                 break;
             default:
@@ -83,7 +82,7 @@ public class PauseTextController : MonoBehaviour {
 
     // ゲームを開始する
     void StartGame() {
-        MainController.state = 2;
+        PlayingStateController.PlayingState = PlayingStateEnum.playing;
         Destroy(transform.gameObject);
     }
 }
