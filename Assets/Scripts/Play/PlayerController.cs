@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
-    // player関連
     public int playerNum;
+    public string aButton;
+    public string horizontalButton;
+    public string verticalButton;
     float size = 1.0f;
     float speed = 10f;
     Vector3 target;
@@ -44,26 +46,11 @@ public class PlayerController : MonoBehaviour {
     {
         if (PlayingStateController.PlayingState == PlayingStateEnum.playing) {
             // playerが移動済みかどうか
-            if (transform.position == target)
-            {
-                switch (playerNum)
-                {
-                    case 1:
-                        if (Input.GetButtonDown("Abutton1")) {
-                            GetSeedKey();
-                        } else {
-                            SetTargetPosition();
-                        }
-                        break;
-                    case 2:
-                        if (Input.GetButtonDown("Abutton2")) {
-                            GetSeedKey();
-                        } else {
-                            SetTargetPosition();
-                        }
-                        break;
-                    default:
-                        break;
+            if (transform.position == target) {
+                if (Input.GetButtonDown(aButton)) {
+                    GetSeedKey();
+                } else {
+                    SetTargetPosition();
                 }
             }
         }
@@ -80,21 +67,9 @@ public class PlayerController : MonoBehaviour {
 
     // 方向キーを押した時
     void SetTargetPosition() {
-        float h = 0f;
-        float v = 0f;
-
-        switch (playerNum) {
-            case 1:
-                h = Input.GetAxis("Horizontal1");
-                v = -Input.GetAxis("Vertical1");
-                break;
-            case 2:
-                h = Input.GetAxis("Horizontal2");
-                v = -Input.GetAxis("Vertical2");
-                break;
-            default:
-                break;
-        }
+        // TODO: 3回押されたら一気に動いてしまう？
+        float h = Input.GetAxis(horizontalButton);
+        float v = -Input.GetAxis(verticalButton);
         movement.Set(h, 0, v);
         // TODO: 壁の判定が甘い
         if (!RayToForwardd(movement)) {
