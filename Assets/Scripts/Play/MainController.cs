@@ -10,8 +10,10 @@ public class MainController : MonoBehaviour {
     public static GameObject player2;
     public Transform[] tile;
     public static float Frame_Size = 100f;
-    public const int MAP_WIDTH = 7;
-    public const int MAP_HEIGHT = 7;
+
+    // TODO: public化してUnity Editorで編集できるようにするか検討
+    const int MAP_WIDTH = 7;
+    const int MAP_HEIGHT = 7;
 
 
     void Start () {
