@@ -4,19 +4,18 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class PauseCanvasController : MonoBehaviour {
-    Transform myTransform;
+
     public GameObject pauseBG;
     public GameObject countdownText;
 
     bool finished = false;
 
-    /*———————————————— 初期化 ————————————————*/
+
     void Start () {
-        myTransform = transform;
         MakePause();
     }
-    
-    /*———————————————— フレーム更新 ————————————————*/
+
+
     void Update () {
         switch (MainController.state) {
             case 0: // スタート待機
@@ -39,17 +38,11 @@ public class PauseCanvasController : MonoBehaviour {
     }
 
 
-
-    /*———————————————— Pause画面を出す(インスタンス化) ————————————————*/
-
     void MakePause() {
-        Instantiate(pauseBG, myTransform);
-        Instantiate(countdownText, myTransform);
+        Instantiate(pauseBG, transform);
+        Instantiate(countdownText, transform);
     }
 
-
-
-    /*———————————————— stateによる処理 ————————————————*/
 
     // スタートキーを押した時
     void GetStartKey() {
@@ -57,6 +50,7 @@ public class PauseCanvasController : MonoBehaviour {
             MainController.state = 1;
         }
     }
+
 
     // ポーズキーを押した時
     void GetPauseKey() {
@@ -66,20 +60,22 @@ public class PauseCanvasController : MonoBehaviour {
         }
     }
 
+
     // リスタート(ポーズ解除）
     void GetRestartKey() {
         if (Input.GetButtonDown("Start")) {
             MainController.state = 2;
-            foreach(Transform child in myTransform) {
+            foreach(Transform child in transform) {
                 Destroy(child.gameObject);
             }
         }
      }
 
+
     // 終わった時
     void GetFinished() {
         // 終わった時
-        if (!finished) {    
+        if (!finished) {
             finished = true;
             MakePause();
         }

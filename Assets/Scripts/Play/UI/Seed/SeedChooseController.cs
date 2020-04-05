@@ -5,29 +5,26 @@ using UnityEngine.UI;
 
 public class SeedChooseController : MonoBehaviour {
 
-    public int playerNum;   // playerの番号
-    public int seedNum;   // スプライト数
+    public int playerNum;
+    public int seedNum;
 
-    int chosenOption = 0;   // 選ばれたoption番号
-    float frameSize;        // 枠の横サイズ
-    //float speed = 800f;     // 枠の移動速度
-    Transform myTransform;  // transformのキャッシュ用
-    Vector3 startPosition;  // 最初のposition
-    Vector3 target;         // 移動先のposition
-    GameObject playerObj;   // playerのobject
+    int chosenOption = 0;
+    float frameSize;
+    //float speed = 800f;
+    Vector3 startPosition;
+    Vector3 target;
+    GameObject playerObj;
     PlayerController playerController;
 
 
-    /*——————————————初期化——————————————————*/
     void Start () {
         // 値の取得
-        frameSize = MainController.Frame_Size;              // 枠の横サイズを取得
-        myTransform = transform;
-        startPosition = myTransform.position;
+        frameSize = MainController.Frame_Size;
+        startPosition = transform.position;
 
         ChangeColor();
 
-        target = myTransform.position;                      // 移動先を現在地に(初期化)
+        target = transform.position;                      // 移動先を現在地に(初期化)
         switch (playerNum) {                                // playerObjにPlayerを代入
             case 1:
                 playerObj = MainController.player1;
@@ -42,16 +39,15 @@ public class SeedChooseController : MonoBehaviour {
     }
 
 
-    /*———————————————— 更新 ————————————————*/
-    // フレーム毎の更新
     void Update () {
         // frameが動いていない時
-        if (myTransform.position == target) {
+        if (transform.position == target) {
             playerController.chosenOption = chosenOption;
             // 入力があればtargetをセット
             SetTarget();
         }
     }
+
 
     // 秒数毎の更新
     void FixedUpdate()
@@ -74,17 +70,16 @@ public class SeedChooseController : MonoBehaviour {
                 color = Color.white;
                 break;
         }
-        myTransform.GetComponent<Image>().color = color;
+        transform.GetComponent<Image>().color = color;
     }
 
 
-
-    /*——————————————— frameの移動 —————————————————*/
-
     // 入力に応じてtargetのpositionをセット
     void SetTarget() {
-        target = myTransform.position;    // targetに現在値を入力
-        int num = seedNum - 1;          // 最右位置用
+        // targetに現在値を入力
+        target = transform.position;
+        // 最右位置用
+        int num = seedNum - 1;
 
         // 入力値の取得
         float h = 0f;
@@ -107,12 +102,12 @@ public class SeedChooseController : MonoBehaviour {
     // キーを入力した時の処理
     float GetFrameButton(string key1, string key2, float max, float min) {
         // key1を押した時
-        if (Input.GetButtonDown(key1) && (myTransform.position.x < max + startPosition.x)) {
+        if (Input.GetButtonDown(key1) && (transform.position.x < max + startPosition.x)) {
             chosenOption += 1;
             return 1f;
         }
         // key2を押した時
-        else if (Input.GetButtonDown(key2) && (myTransform.position.x > min + startPosition.x))
+        else if (Input.GetButtonDown(key2) && (transform.position.x > min + startPosition.x))
         {
             chosenOption -= 1;
             return -1f;
@@ -123,7 +118,7 @@ public class SeedChooseController : MonoBehaviour {
 
     // 枠をtargetに動かす
     void Move() {
-        //myTransform.position = Vector3.MoveTowards(myTransform.position, target, speed * Time.deltaTime);
-        myTransform.position = target;
+        //transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        transform.position = target;
     }
 }

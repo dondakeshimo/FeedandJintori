@@ -6,20 +6,14 @@ using UnityEngine.UI;
 public class CanvasController : MonoBehaviour {
 
     // タネのオプション関連
-    public GameObject framePrefab;             // 選択枠プレハブ
-    public GameObject[] optionPanelPrefab;     // optionのプレハブ
-
+    public GameObject framePrefab;
+    public GameObject[] optionPanelPrefab;
     // その他のプレハブ
-    public GameObject timerPrefab;  // タイマー表示text
-    public GameObject scorePrefab;  // 得点表示text
-
-    Transform myTransform;  // transform
+    public GameObject timerPrefab;
+    public GameObject scorePrefab;
 
 
-    /*———————————————— 初期化 ————————————————*/
     void Start () {
-        myTransform = transform;
-
         // 選択肢を並べる
         MakeSeedOption();
 
@@ -32,36 +26,21 @@ public class CanvasController : MonoBehaviour {
     }
 
 
-
-
-
-
-
-    /*———————————————— タネoption生成 ————————————————*/
-
     void MakeSeedOption() {
         foreach (GameObject prefab in optionPanelPrefab) {
-            Instantiate(prefab, myTransform);
+            Instantiate(prefab, transform);
         }
     }
 
 
-
-
-    /*———————————————— タイマーの表示 ————————————————*/
-
     void MakeTimer() {
-        GameObject timer = Instantiate(timerPrefab, Vector3.zero, Quaternion.identity, myTransform);
+        GameObject timer = Instantiate(timerPrefab, Vector3.zero, Quaternion.identity, transform);
         timer.GetComponent<RectTransform>().anchoredPosition = new Vector3(0, 0, 0);
     }
 
 
-
-
-    /*———————————————— 得点の表示 ————————————————*/
-
     void MakeScore(int playerNum) {
-        GameObject score = Instantiate(scorePrefab, Vector3.zero, Quaternion.identity, myTransform);
+        GameObject score = Instantiate(scorePrefab, Vector3.zero, Quaternion.identity, transform);
         score.GetComponent<ScoreController>().playerNum = playerNum;
         switch (playerNum) {
             case 1:
@@ -76,9 +55,6 @@ public class CanvasController : MonoBehaviour {
     }
 
 
-
-    /*——————————————— UI関連 —————————————————*/
-
     // UIのアンカー、pivot、位置を設定
     void CalcUIPosition(GameObject obj, float lr, float updown, Vector2 pivot, Vector3 position)
     {
@@ -88,5 +64,4 @@ public class CanvasController : MonoBehaviour {
         rt.pivot = pivot;
         rt.anchoredPosition3D = position;
     }
-
 }

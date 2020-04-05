@@ -5,15 +5,13 @@ using UnityEngine.UI;
 
 public class PauseTextController : MonoBehaviour {
 
-    int count = 3;          // カウントダウン用
-    float frameCount = 0f;  // フレームカウント
-    Transform myTransform;
+    int count = 3;
+    float frameCount = 0f;
     Text myText;
 
-    /*———————————————— 初期化 ————————————————*/
+
     void Start () {
-        myTransform = transform;
-        myText = myTransform.GetComponent<Text>();
+        myText = transform.GetComponent<Text>();
         switch (MainController.state) {
             case 0:
                 myText.text = "PRESS +/-";
@@ -37,9 +35,8 @@ public class PauseTextController : MonoBehaviour {
                 break;
         }
     }
-    
 
-    /*———————————————— フレーム更新 ————————————————*/
+
     void Update () {
         switch (MainController.state) {
             case 0:
@@ -54,7 +51,6 @@ public class PauseTextController : MonoBehaviour {
     }
 
 
-
     // スタートキーを押した時
     void GetStartKey() {
         if (Input.GetButtonUp("Start")) {
@@ -62,6 +58,7 @@ public class PauseTextController : MonoBehaviour {
             myText.text = "3";
         }
     }
+
 
     // カウントを進める
     void CountDown() {
@@ -83,9 +80,10 @@ public class PauseTextController : MonoBehaviour {
         }
     }
 
+
     // ゲームを開始する
     void StartGame() {
         MainController.state = 2;
-        Destroy(myTransform.gameObject);
+        Destroy(transform.gameObject);
     }
 }

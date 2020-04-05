@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class SceneController : MonoBehaviour {
 
-
-    void Start () {
-
-    }
-
-
     void Update () {
         if (Input.GetKey(KeyCode.Return)) {
             SceneManager.LoadScene ("Play");

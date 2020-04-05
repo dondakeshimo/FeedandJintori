@@ -4,24 +4,19 @@ using UnityEngine;
 
 public class SeedController : MonoBehaviour {
 
-    public float growTime = 8f;     // 育つまでの時間
-    public GameObject flowerPrefab; // flowerのプレハブ
-    MeshRenderer meshrenderer;      // alpha値用
-    Transform myTransform;
+    // 育つまでの時間
+    public float growTime = 8f;
+    public GameObject flowerPrefab;
+    MeshRenderer meshrenderer;
+    float frameCount = 0;
 
-    float frameCount = 0;                // フレームカウント
 
-    /*————————————————初期化————————————————*/
     private void Start()
     {
-        myTransform = transform;
         meshrenderer = GetComponent<MeshRenderer>();
-        //Invoke("DestroyByRafflesia", 0.2f);
-        //DestroyByRafflesia();
     }
 
 
-    /*———————————————フレーム毎の更新—————————————————*/
     void Update () {
         if (MainController.state == 2) {
             // 秒数更新
@@ -30,9 +25,10 @@ public class SeedController : MonoBehaviour {
             // growTimeが経ったら花が咲く
             if (frameCount >= growTime)
             {
-                meshrenderer.material.color = new Color(0, 0, 0, 1.0f);     // タネを透明に
-                GameObject flower = Instantiate(flowerPrefab, myTransform.position, Quaternion.identity); // 花をインスタンス化
-                flower.name = myTransform.name;
+                // タネを透明に
+                meshrenderer.material.color = new Color(0, 0, 0, 1.0f);
+                GameObject flower = Instantiate(flowerPrefab, transform.position, Quaternion.identity);
+                flower.name = transform.name;
                 Destroy(gameObject);
                 frameCount = 0;
             }

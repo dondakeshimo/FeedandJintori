@@ -9,21 +9,16 @@ public class SeedOptionPanel : MonoBehaviour {
     public Sprite[] sprites;
     public GameObject optionPrefab;
     public GameObject framePrefab;
+    float frameSize;
 
-    Transform myTransform;
-    float frameSize;        // 枠の横サイズ
 
-    /*———————————————— 初期化 ————————————————*/
     void Start () {
-        myTransform = transform;
         frameSize = MainController.Frame_Size;
 
         ArrayOption();
         MakeFrame();
     }
 
-
-    /*———————————————— option作成 ————————————————*/
 
     // optionを並べる
     void ArrayOption() {
@@ -33,9 +28,8 @@ public class SeedOptionPanel : MonoBehaviour {
     }
 
 
-    // optionをインスタンス化
     void MakeOption(int i) {
-        Transform instance = Instantiate(optionPrefab, myTransform).transform;
+        Transform instance = Instantiate(optionPrefab, transform).transform;
         instance.Translate(new Vector3(i * frameSize, 0, 0));
         instance.GetChild(0).GetComponent<Image>().sprite = sprites[i];
         SeedHaveController seedHave = instance.GetChild(2).GetComponent<SeedHaveController>();
@@ -44,10 +38,8 @@ public class SeedOptionPanel : MonoBehaviour {
     }
 
 
-    /*———————————————— frame作成 ————————————————*/
-
     void MakeFrame() {
-        GameObject instance = Instantiate(framePrefab, myTransform);
+        GameObject instance = Instantiate(framePrefab, transform);
         SeedChooseController scc = instance.GetComponent<SeedChooseController>();
         scc.playerNum = playerNum;
         scc.seedNum = sprites.Length;

@@ -5,17 +5,15 @@ using UnityEngine.UI;
 
 public class SeedHaveController : MonoBehaviour {
 
-    Transform myTransform;
     Text myText;
-
     public int playerNum;
     public int seedNum;
     int[] seedCounts;
     int seedCount = 0;
 
+
     void Start () {
-        myTransform = transform;
-        myText = myTransform.GetComponent<Text>();
+        myText = transform.GetComponent<Text>();
 
         switch(playerNum) {
             case 1:
@@ -30,11 +28,13 @@ public class SeedHaveController : MonoBehaviour {
         ChangeText();
     }
 
+
     void Update () {
         if (seedCount != seedCounts[seedNum]) {
             ChangeText();
         }
     }
+
 
     void ChangeText() {
         myText.text = "x" + seedCounts[seedNum];

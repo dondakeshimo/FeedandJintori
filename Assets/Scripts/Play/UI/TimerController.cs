@@ -5,20 +5,19 @@ using UnityEngine.UI;
 
 public class TimerController : MonoBehaviour {
 
-    Text timerText;         // Textコンポーネント
-    int timeCount = 30;     // 秒数
-    float frameCount = 0;   // フレームカウント
+    Text timerText;
+    int timeCount = 30;
+    float frameCount = 0;
 
 
-    // 初期化
     void Start () {
         timerText = transform.GetComponent<Text>();
         timerText.text = timeCount.ToString();
     }
 
-    // フレーム更新
+
     void Update () {
-        if (MainController.state == 2) {  // 開始した後
+        if (MainController.state == 2) {
             frameCount += Time.deltaTime;
             // 1秒たったら、timeCountを進める
             if (frameCount >= 1)
@@ -27,7 +26,7 @@ public class TimerController : MonoBehaviour {
                 timerText.text = timeCount.ToString();
                 frameCount = 0;
                 if (timeCount <= 0){
-                    MainController.state = 4;   // stateをfinishに
+                    MainController.state = 4;
                     print("Finish");
                 }
             }

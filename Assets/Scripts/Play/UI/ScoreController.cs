@@ -6,10 +6,10 @@ using UnityEngine.UI;
 public class ScoreController : MonoBehaviour {
 
     public int playerNum;
-
     int score = 0;
     Text scoreText;
     PlayerController player;
+
 
     void Start () {
         // Textをキャスト
@@ -38,7 +38,6 @@ public class ScoreController : MonoBehaviour {
     }
 
 
-    // 色を変更
     void ChangeColor() {
         switch (playerNum) {
             case 1:

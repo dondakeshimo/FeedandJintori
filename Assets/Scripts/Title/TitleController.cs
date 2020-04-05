@@ -7,8 +7,6 @@ public class TitleController : MonoBehaviour {
     public GameObject optionPrefab;
     public GameObject framePrefab;
 
-    // transform
-    Transform myTransform;
     // option数
     int optionNum = 3;
     // optionのサイズ
@@ -16,7 +14,6 @@ public class TitleController : MonoBehaviour {
 
 
     void Start () {
-        myTransform = transform;
         ArrayOptions();
         InstantiateOption(framePrefab, 0, false);
     }
@@ -34,7 +31,7 @@ public class TitleController : MonoBehaviour {
 
 
     void InstantiateOption(GameObject prefab, int dx, bool isOption) {
-        GameObject instance = Instantiate(prefab, myTransform);
+        GameObject instance = Instantiate(prefab, transform);
         instance.transform.Translate(new Vector3(dx * FRAME_SIZE, 0, 0));
         if (isOption) {
             instance.name = "Stage" + dx;

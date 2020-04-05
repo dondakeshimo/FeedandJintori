@@ -5,11 +5,7 @@ using UnityEngine.UI;
 
 public class TitleOption : MonoBehaviour {
 
-    Transform myTransform;
-
-
     void Start () {
-        myTransform = transform;
-        myTransform.GetComponent<Text>().text = myTransform.parent.name;
+        transform.GetComponent<Text>().text = transform.parent.name;
     }
 }
