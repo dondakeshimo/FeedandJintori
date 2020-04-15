@@ -4,91 +4,77 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour {
 
+    // TODO: playerNumが 1 or 2以外取らないように保証する
     public int playerNum;
     public string aButton;
     public string horizontalButton;
     public string verticalButton;
-    float size = 1.0f;
-    float speed = 10f;
-    Vector3 target;
-    Vector3 prePos;
-    Vector3 movement;
-
-    // Ray関連
-    Ray rayToForward;
-    int wallLayer = 1 << 10 | 1 << 11;
-    Ray rayToSeed;
-    int seedLayer = 1 << 9;
-
-    // enemy関連
-    int enemyNum;
-
-    // タネ関連
     public Transform[] seedPrefabs;
-    public int chosenOption = 0;
     public int[] seedCounts;
-
-    // 得点
+    public int chosenOption = 0;
     public int score = 0;
+
+    const float PLAYER_SQUARE_SIDE = 1.0f;
+    const float PLAYER_SPEED = 10f;
+    const float RAY_OFFSET_Y = 5f;
+    const int COLLISION_LAYER = 1 << 10 | 1 << 11;
+    const int SEED_LAYER = 1 << 9;
+    const int RIGIDITY_TIME = 0;
+
+    Vector3 prePos;
+    Vector3 direction;
+
+    Ray rayToForward;
+    Ray rayToSeed;
+
+    int enemyNum;
+    int waitingCounter = RIGIDITY_TIME;
 
 
     void Start () {
         // playerの移動関連
-        target = transform.position;
-        movement.Set(0, 0, 0);
-
-        // enemyの番号
-        enemyNum = CalcEnemyPlayerNumber(playerNum);
+        direction.Set(0, 0, 0);
+        enemyNum = playerNum == 1 ? 2 : 1;
     }
 
 
-    void Update()
-    {
-        if (PlayingStateController.PlayingState == PlayingStateEnum.playing) {
-            // playerが移動済みかどうか
-            if (transform.position == target) {
-                if (Input.GetButtonDown(aButton)) {
-                    GetSeedKey();
-                } else {
-                    SetTargetPosition();
-                }
+    void Update() {
+        if (PlayingStateController.PlayingState != PlayingStateEnum.playing) {
+            return;
+        }
+
+        if (waitingCounter > RIGIDITY_TIME) {
+            if (Input.GetButtonDown(aButton)) {
+                PressedAButton();
+                waitingCounter = 0;
+            }
+
+            if (Input.GetAxis(horizontalButton) != 0 || Input.GetAxis(verticalButton) != 0) {
+                PressedArrowButton();
+                waitingCounter = 0;
             }
         }
-    }
 
-
-    // 秒数固定の更新
-    void FixedUpdate()
-    {
-        // playerを動かす
-        Move();
+        waitingCounter++;
     }
 
 
     // 方向キーを押した時
-    void SetTargetPosition() {
-        // TODO: 3回押されたら一気に動いてしまう？
-        float h = Input.GetAxis(horizontalButton);
-        float v = -Input.GetAxis(verticalButton);
-        movement.Set(h, 0, v);
-        // TODO: 壁の判定が甘い
-        if (!RayToForwardd(movement)) {
-            target = transform.position + movement * size;
+    void PressedArrowButton() {
+        direction.Set(Input.GetAxis(horizontalButton), 0, -Input.GetAxis(verticalButton));
+        if (!WillCollision(direction)) {
+            Vector3 targetPos = transform.position + direction * PLAYER_SQUARE_SIDE;
+            transform.position = Vector3.MoveTowards(transform.position, targetPos, PLAYER_SPEED);
         }
     }
 
 
-    // playerを動かす
-    void Move() {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
-    }
-
-
-    // 正面にレイを飛ばす
-    bool RayToForwardd(Vector3 direction) {
+    // 移動できるかの判定
+    // 移動先に物体がある場合true(移動できない場合true)
+    bool WillCollision(Vector3 direction) {
         rayToForward = new Ray(transform.position, direction);
         RaycastHit obj;
-        if (Physics.Raycast(rayToForward, out obj, 1.0f, wallLayer)) {
+        if (Physics.Raycast(rayToForward, out obj, PLAYER_SQUARE_SIDE, COLLISION_LAYER)) {
             return true;
         } else {
             return false;
@@ -96,14 +82,14 @@ public class PlayerController : MonoBehaviour {
     }
 
 
-    // return/spaceキーを押された時に呼ばれる関数
-    void GetSeedKey() {
+    // A Buttonを押した時
+    void PressedAButton() {
         Vector3 rayPosition = transform.position;
-        rayPosition.y += 5f;
+        rayPosition.y += RAY_OFFSET_Y;
         rayToSeed = new Ray(rayPosition, -transform.up);
         RaycastHit seed;
         // rayがタネ系に当たった場合
-        if(Physics.Raycast(rayToSeed, out seed, 5.0f, seedLayer)) {
+        if(Physics.Raycast(rayToSeed, out seed, RAY_OFFSET_Y, SEED_LAYER)) {
             Transform seedTransform = seed.transform;
             // 足元に相手のタネ系オブジェクトがある
             if (seedTransform.name == enemyNum.ToString()) {
@@ -111,45 +97,31 @@ public class PlayerController : MonoBehaviour {
             }
             // 足元に自分の花オブジェクトがある
             else if (seedTransform.tag == "Flower") {
-                TakeSeed(seedTransform); // 花を摘む
+                print(1);
+                TakeSeed(seedTransform);
             }
         }
         // 足元に何もオブジェクトがない
         else if(seedCounts[chosenOption] > 0) {
-            SetSeed();  // タネを植える
+            SetSeed();
         }
-
     }
 
 
     // タネを植える
     void SetSeed() {
-        string seedName = playerNum.ToString();
         Vector3 position = new Vector3(transform.position.x, 0f, transform.position.z);
         Transform seed = Instantiate(seedPrefabs[chosenOption], position, Quaternion.identity);
-        seed.name = seedName;
+        seed.name = playerNum.ToString();
         seedCounts[chosenOption] -= 1;
     }
 
 
     // タネを取る(花を摘む)
     void TakeSeed(Transform seed) {
+        print(2);
         seed.GetComponent<FlowerController>().TakeFlower(seedCounts);
+        print(3);
         Destroy(seed.gameObject);
-    }
-
-
-    // 相手のplayer番号を計算
-    int CalcEnemyPlayerNumber(int n) {
-        switch (n) {
-            case 1:
-                return 2;
-            case 2:
-                return 1;
-            default:
-                print("error with playerNum");
-                break;
-        }
-        return 1;
     }
 }
