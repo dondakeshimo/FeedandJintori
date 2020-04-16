@@ -19,7 +19,7 @@ public class PlayerController : MonoBehaviour {
     const float RAY_OFFSET_Y = 5f;
     const int COLLISION_LAYER = 1 << 10 | 1 << 11;
     const int SEED_LAYER = 1 << 9;
-    const int RIGIDITY_TIME = 0;
+    const int RIGIDITY_TIME = 4;
 
     Vector3 prePos;
     Vector3 direction;
@@ -43,16 +43,18 @@ public class PlayerController : MonoBehaviour {
             return;
         }
 
-        if (waitingCounter > RIGIDITY_TIME) {
-            if (Input.GetButtonDown(aButton)) {
-                PressedAButton();
-                waitingCounter = 0;
-            }
+        if (waitingCounter < RIGIDITY_TIME) {
+            return;
+        }
 
-            if (Input.GetAxis(horizontalButton) != 0 || Input.GetAxis(verticalButton) != 0) {
-                PressedArrowButton();
-                waitingCounter = 0;
-            }
+        if (Input.GetButtonDown(aButton)) {
+            PressedAButton();
+            waitingCounter = 0;
+        }
+
+        if (Input.GetAxis(horizontalButton) != 0 || Input.GetAxis(verticalButton) != 0) {
+            PressedArrowButton();
+            waitingCounter = 0;
         }
 
         waitingCounter++;
@@ -97,7 +99,6 @@ public class PlayerController : MonoBehaviour {
             }
             // 足元に自分の花オブジェクトがある
             else if (seedTransform.tag == "Flower") {
-                print(1);
                 TakeSeed(seedTransform);
             }
         }
