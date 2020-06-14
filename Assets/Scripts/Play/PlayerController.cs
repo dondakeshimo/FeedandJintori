@@ -39,20 +39,23 @@ public class PlayerController : MonoBehaviour {
 
 
     void Update() {
+        // early returnできなかったのでやむなくフラグ管理
+        bool skipFlag = false;
+
         if (PlayingStateController.PlayingState != PlayingStateEnum.playing) {
-            return;
+            skipFlag = true;
         }
 
         if (waitingCounter < RIGIDITY_TIME) {
-            return;
+            skipFlag = true;
         }
 
-        if (Input.GetButtonDown(aButton)) {
+        if (!skipFlag && Input.GetButtonDown(aButton)) {
             PressedAButton();
             waitingCounter = 0;
         }
 
-        if (Input.GetAxis(horizontalButton) != 0 || Input.GetAxis(verticalButton) != 0) {
+        if (!skipFlag && (Input.GetAxis(horizontalButton) != 0 || Input.GetAxis(verticalButton) != 0)) {
             PressedArrowButton();
             waitingCounter = 0;
         }
@@ -120,9 +123,7 @@ public class PlayerController : MonoBehaviour {
 
     // タネを取る(花を摘む)
     void TakeSeed(Transform seed) {
-        print(2);
         seed.GetComponent<FlowerController>().TakeFlower(seedCounts);
-        print(3);
         Destroy(seed.gameObject);
     }
 }
